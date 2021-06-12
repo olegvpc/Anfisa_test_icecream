@@ -6,7 +6,7 @@ from django.db import models
 
 class Icecream(models.Model):
     name = models.CharField(verbose_name="Название мороженого", max_length=100)
-    description = models.CharField(verbose_name="Описание мороженого", max_length=200, blank=True)
+    description = models.TextField(verbose_name="Описание мороженого", max_length=200, blank=True)
 
 
     class Meta:
@@ -21,6 +21,10 @@ class Friend(models.Model):
     friend_city = models.CharField(verbose_name="Город проживания", max_length=100)
     friend_icecream = models.ForeignKey(Icecream, on_delete=models.SET_NULL, blank=True,
                               null=True, verbose_name="Любимые сорта мороженого", related_name="friends")
+
+    def __str__(self):
+        return self.friend_name
+
 
 
     class Meta:

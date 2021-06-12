@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+<!-- <<!DOCTYPE html>
 <html>
   <head>
       <meta charset="UTF-8">
@@ -13,19 +14,84 @@
       <p>
         {{ city_weather }}
       </p>
-      <form action="/" method="post">
+      <form method="post">
         <h2>Выберите друга</h2>
-            {{ friends|safe }}
+            {% for friend in friends %}
+              <p>
+                  <h3><label for="{{ friend.id_for_label }}">
+              {{ friend.friend_name }}: <input type="radio" name="friend"></label></h3>
+            {% endfor %}
         <h2>Выберите мороженое</h2>
-        <!-- Сюда выведите список сортов мороженого с радио-кнопками. -->
-		{{ icecreams|safe }}
+
+            {% for icecream in icecreams %}
+              <p>
+                  <h3><label for="{{ icecream.id_for_label }}">
+              {{ icecream.name }}: <input type="radio" name="icecream"></label></h3>
+              </p>
+            {% endfor %}
         <br>
-       <!-- Измените название на кнопке, напишите на ней "Угостить". -->
-          <input type="submit" value="Угостить">
+
+          <button type="submit">УГОСТИТЬ</button>
       </form>
       <p>
-    <a href='icecream/icecream-new/'>Добавить новое мороженое</a></p><br>
-      {{ new_icecream }}
+        <a href='icecream/icecream-new/'>Добавить новое мороженое</a></p><br>
+      <p>
+        <a href="icecream/icecream-detail/">Посмотреть список и описание мороженого</a>
+      </p>
       
   </body>
+</html>-->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Анфиса для друзей</title>
+  {% load static %}
+
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+  <link rel="icon" type="image" href="https://code.s3.yandex.net/web-code/rules-favicon.ico">
+</head>
+<body>
+  <header class="footer">
+
+      <h1 class="header-title">Анфиса ищет друзей</h1>
+
+  </header>
+  <section class="content">
+    <form method="post">
+
+      <table>
+        <tr><th><h3 class="card-title">Выберите друга</h3></th>
+          <th><h3 class="card-title">Угости друга мороженым</h3></th><th>
+            <h3 class="card-title">Выбери мороженое</h3></th></tr>
+        <tr><td>{% for friend in friends %}
+                  <h3><label>
+              <input type="radio" class="radio" name="friend" required value="{{ friend.friend_name }}">
+                    {{ friend.friend_name }}</label></h3>
+            {% endfor %} </td><td>
+          <img class="card-image" src="https://code.s3.yandex.net/backend-developer/Anfisa/24.png"></td>
+            <td>{% for icecream in icecreams %}
+                  <h3><label>
+              <input type="radio" class="radio" name="icecream" required value="{{ icecream.name }}">
+                    {{ icecream.name }}</label></h3>
+            {% endfor %}</td></tr>
+        <tr><td><a href='icecream/icecream-new/'>Добавить новое мороженое</a></td>
+          <td><div class="button"><input type="submit" value="Угостить"></div></td>
+             <td><a href="icecream/icecream-detail/">Посмотреть список и описание мороженого</a></td></tr>
+                <tr><td> </td>
+                <td></td><td></td></tr>
+      </table>
+
+        </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    {% if mode == 'get' %} <h4 class="footer-author">ПОДАРИ ДРУГУ МОРОЖЕНОЕ</h4>{% else %}
+    <h4 class="footer-author">{{ friend_choice }}, тебе прислали {{ ice_choice }}
+    <p>В твоем городе {{ city }} погода {{ weather }}</p></h4>{% endif %}}
+
+  </footer>
+</body>
 </html>

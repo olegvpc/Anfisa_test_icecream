@@ -67,3 +67,10 @@ LANGUAGE_CODE = 'ru'
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

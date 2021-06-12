@@ -1,7 +1,10 @@
-from django.shortcuts import render
-from .models import icecream_db
+from django.shortcuts import render, redirect
 
-def icecream_detail(request, pk):
+from .forms import IcecreamForm
+from .models import icecream_db, Icecream
+
+
+def icecream_detail_pk(request, pk):
     name = icecream_db[pk]['name']
     description = icecream_db[pk]['description']
     context = {
@@ -10,22 +13,19 @@ def icecream_detail(request, pk):
     }
     return render(request, 'icecream/icecream-detail.html', context)
 
-def icecream_new(request):
-    new_icecream = f'тут будет новое мороженое<br>'
-    new_description = ''
-    new_ice_db = {}
-    inform_me=''
-    if request.method == 'POST':
-        new_icecream = request.POST['new_icecream']
-        new_description = request.POST['new_description']
-        #last_car=len(icecream_db)
-        new_ice_db['name']=new_icecream
-        new_ice_db['description']=new_description
-        inform_me= f'<strong>{new_icecream}</strong> ДОБАВЛЕНО'
-        icecream_db.append(new_ice_db)
-    context={
-            'new_icecream': new_icecream,
-        'inform_me': inform_me,
-        }
 
-    return render(request, 'icecream/icecream-new.html', context)
+def icecream_detail(request):
+
+    icecreams = Icecream.objects.all()
+    return render(request, 'icecream/icecream-detail.html', {'icecreams': icecreams})
+
+
+def icecream_new(request):
+    if request.method == "POST":
+        form = IcecreamForm(request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect('index')
+    else:
+        form = IcecreamForm()
+    return render(request, 'icecream/icecream-new.html', {'form':form})

@@ -3,12 +3,26 @@
 <head>
     <meta charset="UTF-8">
 </head>
-<body>
-    <h1>Анфиса для друзей</h1>
-    <h2>{{ name }}</h2>
-    <p>{{ description }}</p>
-    <br>
-    <br>
-    <a href="/">На главную</a>
-</body>
+  <body>
+    <h1>Список сортов мороженого и описание</h1><br>
+        <p>
+          <p>
+            <a href='../icecream-new/'>Добавить новое мороженое</a>
+          </p>
+          <p>
+          <form method="post">
+            {% csrf_token %}
+            {% for field in icecreams %}
+              <p>
+                  <h3><label for="{{ field.id_for_label }}">
+              {{ field.name }}: </label></h3>
+              </p>
+              <p>{{ field.description }}</p>
+            {% endfor %}
+          </form>
+       </p>
+       <p>
+         <a href='../../'>На главную</a></p>
+       <p>
+  </body>
 </html>
