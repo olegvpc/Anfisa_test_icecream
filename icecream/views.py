@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from .forms import IcecreamForm
-from .models import icecream_db, Icecream
+from .models import Icecream
 
 
 def icecream_detail_pk(request, pk):

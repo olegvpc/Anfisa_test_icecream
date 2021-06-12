@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
+from icecream.forms import FriendForm
 from icecream.models import Icecream, Friend
 from .services import what_weather
 
@@ -19,6 +21,14 @@ def index(request):
     return render(request, 'homepage/index.html', {'friends': friends,
                                                    'icecreams': icecreams, 'mode': 'get'})
 
+def new_friend(request):
+    if request.method == 'POST':
+        form = FriendForm(request.POST)
+        if form.is_valid():
+            form.save()
+        return redirect('index')
+    form = FriendForm()
+    return render(request, "homepage/friend.html", {"form":form})
 
 # from django.http import HttpResponse
 #
